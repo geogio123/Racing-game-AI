@@ -1,13 +1,20 @@
 # 3D Racing Game Auto-Pilot Bot
 
 
-![tuffest race](https://github.com/user-attachments/assets/2871401c-c2dd-441a-8010-ba54c4f73ea7)
+![AI driving](https://github.com/user-attachments/assets/ed49c35f-2501-49f5-9f59-3d97ed267be4)
+
 
 
 This project is a Python-based auto-pilot bot designed to play various 3D racing games. It operates by capturing the in-game minimap, processing the image with OpenCV to identify the track, and using a sophisticated **PID (Proportional-Integral-Derivative) controller** to make smooth, human-like steering decisions.
 
 The bot is not a "perfect" driver that follows a pre-defined path. Instead, it reacts dynamically to the visual information from the minimap, making it adaptable to different tracks and some racing conditions.
+## Requirements
 
+You can install all necessary Python packages using pip:
+
+```bash
+pip install opencv-python numpy pillow pynput mss pydirectinput
+```
 ## How to use it
 ok so first of all you should edit the colour information of the road and the player, you can do this by taking a screenshot of the minimap and then using a colour picker website. next you should define the area of where the ai should be looking for the minimap. currently it is set the the bottom left corner of the screen. after you configured everything all you have to do is:
 1. **launch the game**
