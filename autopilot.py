@@ -51,6 +51,9 @@ class RacingBot:
         self.output_dir = "racing_bot_recordings"
         if not os.path.exists(self.output_dir): os.makedirs(self.output_dir)
 
+        self.last_w_refresh = time.time()  # Add this line for W key refresh timer
+        self.w_refresh_interval = 5  # Refresh W key every 5 seconds
+
     def process_frame(self):
         """Main processing loop for one frame."""
         frame = self.capture_minimap()
@@ -81,6 +84,18 @@ class RacingBot:
 
     def _send_controls_directinput(self, steering, turn_angle):
         steering_deadzone = 0.15
+        current_time = time.time()
+
+        # Handle W key refresh when going straight
+        if abs(steering) <= steering_deadzone and abs(turn_angle) <= self.angle_throttle_threshold:
+            if current_time - self.last_w_refresh >= self.w_refresh_interval:
+                if 'w' in self.keys_pressed:
+                    pydirectinput.keyUp('w')
+                    self.keys_pressed.remove('w')
+                    time.sleep(0.001)  # 1ms pause
+                    pydirectinput.keyDown('w')
+                    self.keys_pressed.add('w')
+                self.last_w_refresh = current_time
 
         if abs(turn_angle) > self.angle_throttle_threshold:
             if 'w' in self.keys_pressed:
@@ -103,6 +118,18 @@ class RacingBot:
 
     def _send_controls_pynput(self, steering, turn_angle):
         steering_deadzone = 0.15
+        current_time = time.time()
+
+        # Handle W key refresh when going straight
+        if abs(steering) <= steering_deadzone and abs(turn_angle) <= self.angle_throttle_threshold:
+            if current_time - self.last_w_refresh >= self.w_refresh_interval:
+                if 'w' in self.keys_pressed:
+                    self.keyboard_controller.release('w')
+                    self.keys_pressed.remove('w')
+                    time.sleep(0.001)  # 1ms pause
+                    self.keyboard_controller.press('w')
+                    self.keys_pressed.add('w')
+                self.last_w_refresh = current_time
 
         if abs(turn_angle) > self.angle_throttle_threshold:
             if 'w' in self.keys_pressed:
@@ -241,17 +268,47 @@ class RacingBot:
             else: self.setup_video_recording()
 
     def start(self):
-        print("Starting Racing Bot..."); print("--- TUNE PID & ANGLE THROTTLE VALUES! ---")
+        print("Starting Racing Bot...")
+        print("--- TUNE PID & ANGLE THROTTLE VALUES! ---")
+        
+        # Add user prompt for debug recording
+        if self.debug_mode:
+            while True:
+                response = input("Enable debug recording? (y/n): ").lower()
+                if response in ['y', 'n']:
+                    self.record_debug = True if response == 'y' else False
+                    break
+                print("Please enter 'y' or 'n'")
+        
         print("\nControls:\n 'p'-Pause | 'r'-Record | 'q' or 'ESC'-Quit")
-        self.running = True; self.last_time = time.time()
-        if self.record_debug: self.setup_video_recording()
-        listener = Listener(on_press=self.on_key_press); listener.start()
+        
+        # Add countdown before activation
+        print("\nPlease switch to your game window...")
+        print("Bot will activate in:")
+        for i in range(5, 0, -1):
+            print(f"{i}...")
+            time.sleep(1)
+        print("Bot activated!")
+        
+        self.running = True
+        self.last_time = time.time()
+        
+        if self.record_debug:
+            self.setup_video_recording()
+            
+        listener = Listener(on_press=self.on_key_press)
+        listener.start()
+        
         try:
             while self.running:
-                start_time = time.time(); self.process_frame(); elapsed = time.time() - start_time
+                start_time = time.time()
+                self.process_frame()
+                elapsed = time.time() - start_time
                 time.sleep(max(0, 1/60 - elapsed))
-        except KeyboardInterrupt: self.stop()
-        finally: self.cleanup()
+        except KeyboardInterrupt:
+            self.stop()
+        finally:
+            self.cleanup()
 
     def stop(self):
         if self.running: print("Stopping Racing Bot..."); self.running = False
