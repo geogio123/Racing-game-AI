@@ -8,6 +8,16 @@ This project is a Python-based auto-pilot bot designed to play various 3D racing
 
 The bot is not a "perfect" driver that follows a pre-defined path. Instead, it reacts dynamically to the visual information from the minimap, making it adaptable to different tracks and some racing conditions.
 
+## How to use it
+ok so first of all you should edit the colour information of the road and the player, you can do this by taking a screenshot of the minimap and then using a colour picker website. next you should define the area of where the ai should be looking for the minimap. currently it is set the the bottom left corner of the screen. after you configured everything all you have to do is:
+1. **launch the game**
+2. **start the race**
+3. **alt tab from the game**
+4. **launch the script with administrator**
+5. **return to the game as fast as you can**
+
+the program is going to record the minimap area and show gizmos. this will help you debug any issues with the Bot's behaviour
+
 ## Features
 
 - **Real-time Screen Capture:** Uses `mss` for high-performance screen capturing of the minimap region.
@@ -28,16 +38,6 @@ The bot's logic loop is as follows:
 5.  **Decide (Steering):** The Goal Angle is fed into the PID controller. The controller calculates a smooth, proportional steering output to correct the car's heading without overshooting.
 6.  **Act:** The final throttle and steering decisions are sent to the game as `w`, `a`, and `d` key presses.
 7.  **Repeat:** This entire process repeats many times per second.
-
-## How to use it
-ok so first of all you should edit the colour information of the road and the player, you can do this by taking a screenshot of the minimap and then using a colour picker website. next you should define the area of where the ai should be looking for the minimap. currently it is set the the bottom left corner of the screen. after you configured everything all you have to do is:
-1. **launch the game**
-2. **start the race**
-3. **alt tab from the game**
-4. **launch the script**
-5. **return to the game**
-
-the program is going to record the minimap area and show gizmos. this will help you debug any issues with the Bot's behaviour
 
 
 ## Requirements
