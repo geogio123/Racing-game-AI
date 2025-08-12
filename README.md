@@ -47,9 +47,7 @@ The bot's logic loop is as follows:
 7.  **Repeat:** This entire process repeats many times per second.
 
 
-## Requirements
+https://github.com/user-attachments/assets/d1910b48-b895-47c8-a281-83710f6df12c
 
-You can install all necessary Python packages using pip:
 
-```bash
-pip install opencv-python numpy pillow pynput mss pydirectinput
+Have fun!
