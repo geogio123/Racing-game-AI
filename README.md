@@ -5,7 +5,7 @@
 
 
 
-This project is a Python-based auto-pilot bot designed to play various 3D racing games. It operates by capturing the in-game minimap, processing the image with OpenCV to identify the track, and using a sophisticated **PID (Proportional-Integral-Derivative) controller** to make smooth, human-like steering decisions.
+This project is a Python-based auto-pilot bot designed to play various 3D racing games. It operates by capturing the in-game minimap, processing the image with OpenCV to identify the track, and using a sophisticated **PID (Proportional-Integral-Derivative) controller** to make smooth, human-like steering decisions. **No neural networks are used**
 
 The bot is not a "perfect" driver that follows a pre-defined path. Instead, it reacts dynamically to the visual information from the minimap, making it adaptable to different tracks and some racing conditions.
 ## Requirements
