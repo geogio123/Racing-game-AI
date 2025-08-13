@@ -16,7 +16,7 @@ You can install all necessary Python packages using pip:
 pip install opencv-python numpy pillow pynput mss pydirectinput
 ```
 ## How to use it
-ok so first of all you should edit the colour information of the road and the player, you can do this by taking a screenshot of the minimap and then using a colour picker website. next you should define the area of where the ai should be looking for the minimap. currently it is set the the bottom left corner of the screen. after you configured everything all you have to do is:
+ok so first of all you should edit the colour information of the road and the player, you can do this by taking a screenshot of the minimap and then using a colour picker website. next you should define the area of where the ai should be looking for the minimap. currently it is set the the bottom left corner of the screen. Theoretically this means that the bot can be used in any racing game that has a minimap where the player is static in the center. after you configured everything all you have to do is:
 1. **launch the game**
 2. **start the race**
 3. **alt tab from the game**
